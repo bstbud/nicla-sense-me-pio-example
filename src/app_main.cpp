@@ -1,4 +1,3 @@
-
 /*
  * Use this sketch if you want to control nicla from
  * an external device acting as a host.
@@ -12,6 +11,9 @@
  *
 */
 
+
+#ifndef APP_CONFIG_DFU_BHY
+
 #include "Arduino.h"
 #include "Arduino_BHY2.h"
 
@@ -20,11 +22,11 @@
 
 void setup()
 {
-#if DEBUG
   Serial.begin(115200);
+
+#if DEBUG
   BHY2.debug(Serial);
 #endif
-
   BHY2.begin();
 }
 
@@ -33,3 +35,5 @@ void loop()
   // Update and then sleep
   BHY2.update(100);
 }
+
+#endif
