@@ -12,28 +12,36 @@
 */
 
 
-#ifndef APP_CONFIG_DFU_BHY
-
 #include "Arduino.h"
+
+#include "inc/app_config.h"
+
+#if !APP_CONFIG_DFU_BHY
 #include "Arduino_BHY2.h"
+#endif
 
 // Set DEBUG to true in order to enable debug print
 #define DEBUG false
+
 
 void setup()
 {
   Serial.begin(115200);
 
-#if DEBUG
-  BHY2.debug(Serial);
-#endif
+#if !APP_CONFIG_DFU_BHY
   BHY2.begin();
+#else
+  extern void dfubhy();
+  dfubhy();
+#endif
 }
 
 void loop()
 {
-  // Update and then sleep
+#if !APP_CONFIG_DFU_BHY
   BHY2.update(100);
+#else
+  delay(1000);
+#endif
 }
 
-#endif
